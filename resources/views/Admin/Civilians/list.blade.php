@@ -1,0 +1,90 @@
+<div class="card shadow-sm border-0 mb-4">
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle">
+                <thead class="bg-primary text-white">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">ID Num</th>
+                        <th scope="col">Phone</th>
+                        <th scope="col">Gender</th>
+                        <th scope="col">Age</th>
+                        <th scope="col">Marital Status</th>
+                        <th scope="col">Childrens</th>
+                        <th scope="col">Country</th>
+                        <th scope="col" class="text-center">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @forelse ($civilians as $civ)
+                        <tr>
+                            <th scope="row">{{ $loop->iteration }}</th>
+                            <td>{{ $civ->name }}</td>
+                            <td>{{ $civ->email }}</td>
+                            <td>{{ $civ->id_number }}</td>
+                            <td>{{ $civ->phone }}</td>
+                            <td>
+                                @if ($civ->gender == App\Models\User::MALE)
+                                    Male
+                                @else
+                                    Female
+                                @endif
+                            </td>
+                            <td>{{ $civ->age }}</td>
+                            <td>
+                                @if ($civ->marital_status == App\Models\User::SINGLE)
+                                    Single
+                                @elseif ($civ->marital_status == App\Models\User::MARRIED)
+                                    Married
+                                @elseif ($civ->marital_status == App\Models\User::DIVORCED)
+                                    Divorced
+                                @else
+                                    Widowed
+                                @endif
+                            </td>
+                            <td>{{ $civ->childrens }}</td>
+                            <td>{{ $civ->country->name ?? 'Not Selected' }}</td>
+                            <td class="text-center">
+                                <a href="{{ route('admin.civilians.show', $civ->id) }}" class="btn btn-success btn-sm"
+                                    title="Show">
+                                    Show
+                                </a>
+                                @php
+                                    $pendingDeletionCivilian = App\Models\DeletionRequest::where(
+                                        'deletable_type',
+                                        App\Models\User::class,
+                                    )
+                                        ->where('deletable_id', $civ->id)
+                                        ->where('status', App\Models\DeletionRequest::PENDING)
+                                        ->first();
+                                @endphp
+                                @if (!$pendingDeletionCivilian)
+                                    <button type="button" class="btn btn-danger btn-sm" title="Delete"
+                                        data-toggle="modal" data-target="#deleteCiv_{{ $civ->id }}">
+                                        Delete
+                                    </button>
+                                @else
+                                    <button type="button" class="btn btn-warning btn-sm">
+                                        Deletion is pending
+                                    </button>
+                                @endif
+                            </td>
+                        </tr>
+                        @include('Admin.Civilians.delete')
+                    @empty
+                        <tr>
+                            <td colspan="11" class="text-center alert alert-info">
+                                No Civilians found
+                            </td>
+                        </tr>
+                    @endforelse
+                </tbody>
+            </table>
+            <div class="mt-3">
+                {{ $civilians->appends(request()->except('page'))->links() }}
+            </div>
+        </div>
+    </div>
+</div>
