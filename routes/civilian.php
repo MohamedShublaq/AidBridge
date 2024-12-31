@@ -12,32 +12,31 @@ use Illuminate\Support\Facades\Route;
 |--------------------------------------------------------------------------
 */
 
-Route::group(['middleware'=>['auth:web'], 'prefix'=>'civilian', 'as'=>'civilian.'] , function(){
+Route::group(['middleware'=>['auth:web' , 'completePersonalInfo'], 'prefix'=>'civilian', 'as'=>'civilian.'] , function(){
 
     //*********************// Home Controller //*********************//
     Route::controller(HomeController::class)->group(function(){
-        Route::get('/home' , 'index')->name('home')->middleware('completePersonalInfo');
-        Route::post('/apply' , 'apply')->name('apply')->middleware('completePersonalInfo');
+        Route::get('/home' , 'index')->name('home');
+        Route::post('/apply' , 'apply')->name('apply');
     });
 
     //*********************// Profile Controller //*********************//
     Route::controller(ProfileController::class)->group(function(){
-        Route::get('/profile' , 'showProfile')->name('showProfile');
-        Route::post('/profile' , 'updateProfile')->name('updateProfile');
-        Route::get('/change/password' , 'showChangePassword')->name('showChangePassword')->middleware('completePersonalInfo');
-        Route::post('/change/password' , 'changePassword')->name('changePassword')->middleware('completePersonalInfo');
+        Route::get('/profile' , 'showProfile')->name('showProfile')->withoutMiddleware('completePersonalInfo');
+        Route::post('/profile' , 'updateProfile')->name('updateProfile')->withoutMiddleware('completePersonalInfo');
+        Route::get('/change/password' , 'showChangePassword')->name('showChangePassword');
+        Route::post('/change/password' , 'changePassword')->name('changePassword');
     });
 
     //*********************// Ngo Controller //*********************//
     Route::controller(NgoController::class)->as('ngos.')->group(function(){
-        Route::get('/ngos/status/{status}' , 'index')->name('index')->middleware('completePersonalInfo');
+        Route::get('/ngos/status/{status}' , 'index')->name('index');
     });
 
     //*********************// Aid Controller //*********************//
     Route::controller(AidController::class)->as('aids.')->group(function(){
-        Route::get('/aid/show/{id}' , 'show')->name('show')->middleware('completePersonalInfo');
-        Route::post('/aid/response' , 'response')->name('response')->middleware('completePersonalInfo');
-        Route::get('/aid/showDistribution/{id}' , 'showDistribution')->name('showDistribution')->middleware('completePersonalInfo');
+        Route::get('/aid/show/{id}' , 'show')->name('show');
+        Route::post('/aid/response' , 'response')->name('response');
+        Route::get('/aid/showDistribution/{id}' , 'showDistribution')->name('showDistribution');
     });
-    //Dont forget to add completePersonalInfo middleware to new routes
 });

@@ -18,7 +18,6 @@ class CreateAidDistributionsTable extends Migration
             $table->id();
             $table->foreignId('request_id')->constrained('requests')->cascadeOnDelete()->cascadeOnUpdate();
             $table->foreignId('location_id')->constrained('locations')->cascadeOnDelete()->cascadeOnUpdate();
-            $table->date('distribution_date');
             $table->unsignedTinyInteger('status')->default(AidDistribution::DEFAULT_STATUS);
             $table->timestamps();
         });

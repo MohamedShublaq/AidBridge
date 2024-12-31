@@ -20,6 +20,8 @@ class Aid extends Model
         'description',
         'type',
         'quantity',
+        'from',
+        'due',
         'ngo_id',
     ];
 
@@ -33,7 +35,12 @@ class Aid extends Model
     }
 
     public function locations(){
-        return $this->hasMany(Location::class);
+        return $this->belongsToMany(Location::class , 'aid_locations');
+    }
+
+    public function aidLocations()
+    {
+        return $this->hasMany(AidLocation::class);
     }
 
     protected static function boot()
@@ -44,7 +51,7 @@ class Aid extends Model
             $aid->requests()->delete();
         });
         static::deleting(function ($aid) {
-            $aid->locations()->delete();
+            $aid->aidLocations()->delete();
         });
     }
 }

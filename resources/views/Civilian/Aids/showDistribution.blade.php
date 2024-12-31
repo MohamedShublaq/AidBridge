@@ -22,9 +22,14 @@
                 name="location" disabled>
         </div>
         <div class="mb-3">
-            <label for="distribution_date" class="form-label fw-bold">Distribution Date</label>
-            <input id="distribution_date" class="form-control border-primary" value="{{ $distribution->distribution_date }}" type="text"
-                name="distribution_date" disabled>
+            <label class="form-label fw-bold">From Date</label>
+            <input class="form-control border-primary" value="{{ $distribution->request->aid->from }}" type="text"
+                name="from" disabled>
+        </div>
+        <div class="mb-3">
+            <label class="form-label fw-bold">Due Date</label>
+            <input class="form-control border-primary" value="{{ $distribution->request->aid->due }}" type="text"
+                name="due" disabled>
         </div>
     </div>
 @endsection

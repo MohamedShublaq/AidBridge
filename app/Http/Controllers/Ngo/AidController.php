@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Ngo;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Ngo\AidRequest;
 use App\Models\Aid;
+use App\Models\Ngo;
 use App\Models\NgosUsers;
 use App\Models\User;
 use App\Notifications\NewAidNotification;
@@ -42,7 +43,8 @@ class AidController extends Controller
 
     public function create()
     {
-        return view('Ngo.Aids.create');
+        $ngo = Ngo::findOrFail(auth('ngo')->user()->id);
+        return view('Ngo.Aids.create' , compact('ngo'));
     }
 
 
@@ -50,17 +52,15 @@ class AidController extends Controller
     {
         $request->validated();
 
-        $aid = Aid::create($request->only(['name', 'description', 'type', 'quantity', 'ngo_id']));
+        $aid = Aid::create($request->only(['name', 'description', 'type', 'quantity', 'from', 'due', 'ngo_id']));
 
         if (!$aid) {
             return redirect()->back()->with('error', 'There was a problem');
         }
 
-        foreach ($request->locations as $location) {
-            $aid->locations()->create([
-                'name' => $location,
-            ]);
-        }
+        //Store in aid_locations table
+        $aid->locations()->attach($request->locations);
+
         $civiliansIds = NgosUsers::where('ngo_id' , auth('ngo')->user()->id)->where('status' , NgosUsers::APPROVED)->pluck('user_id');
         $civilians = User::whereIn('id' , $civiliansIds)->get();
         Notification::send($civilians , new NewAidNotification($aid));
@@ -71,7 +71,9 @@ class AidController extends Controller
     public function edit($id)
     {
         $aid = Aid::findOrFail($id);
-        return view('Ngo.Aids.edit', compact('aid'));
+        $ngo = Ngo::findOrFail(auth('ngo')->user()->id);
+        $locationsIds = $aid->aidLocations()->pluck('location_id')->toArray();
+        return view('Ngo.Aids.edit', compact('aid','ngo','locationsIds'));
     }
 
 
@@ -80,25 +82,14 @@ class AidController extends Controller
         $request->validated();
 
         $aid = Aid::findOrFail($id);
-        $aid->update($request->only(['name', 'description', 'type', 'quantity', 'ngo_id']));
+        $aid->update($request->only(['name', 'description', 'type', 'quantity', 'from', 'due', 'ngo_id']));
 
-        // Update locations
-        $existingLocationIds = $aid->locations->pluck('id')->toArray();
-        $newLocations = $request->locations;
-        $newLocationIds = [];
-
-        foreach ($newLocations as $locationName) {
-            // Find existing location or create a new one
-            $location = $aid->locations()->updateOrCreate(
-                ['name' => $locationName],
-                ['name' => $locationName]
-            );
-            $newLocationIds[] = $location->id;
+        // update aid_locations table
+        if (isset($request->locations)) {
+            $aid->locations()->sync($request->locations);
+        } else {
+            $aid->locations()->sync(array());
         }
-
-        // Remove old locations that are no longer attached to this aid
-        $locationsToDetach = array_diff($existingLocationIds, $newLocationIds);
-        $aid->locations()->whereIn('id', $locationsToDetach)->delete();
 
         return redirect()->route('ngo.aids.index')->with('success', 'Aid Updated Successfully');
     }

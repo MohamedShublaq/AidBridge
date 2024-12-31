@@ -18,7 +18,6 @@
                             <option value="{{ $location->id }}">{{ $location->name }}</option>
                         @endforeach
                     </select><br>
-                    <input type="date" class="form-control" name="distribution_date" required><br>
                     <h5>Are you sure you want to approve the selected requests?</h5>
                 </div>
                 <div class="modal-footer">

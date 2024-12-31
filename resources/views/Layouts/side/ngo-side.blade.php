@@ -51,6 +51,13 @@
         <span>Providers</span></a>
 </li>
 
+<!-- Nav Item - Locations Menu -->
+<li class="nav-item">
+    <a class="nav-link" href="{{ route('ngo.locations.index') }}">
+        <i class="fas fa-map-marker-alt"></i>
+        <span>Locations</span></a>
+</li>
+
 <!-- Nav Item - Aids Collapse Menu -->
 <li class="nav-item">
     <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#Aids"

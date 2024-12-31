@@ -107,7 +107,7 @@ class CivilianController extends Controller
 
     public function downloadTemplate()
     {
-        $filePath = public_path('templates/template.xlsx');
+        $filePath = public_path('templates/ImportCiviliansTemplate.xlsx');
 
         if (file_exists($filePath)) {
             return response()->download($filePath);

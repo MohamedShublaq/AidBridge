@@ -11,6 +11,7 @@ use App\Notifications\ApproveAidRequestNotification;
 use App\Notifications\RejectAidRequestNotification;
 use App\Notifications\UnvailableAidRequestNotification;
 use App\Exports\CiviliansExport;
+use App\Imports\ChangeAidDistributionStatus;
 use App\Models\Country;
 use App\Models\Provider;
 use Maatwebsite\Excel\Facades\Excel;
@@ -131,7 +132,6 @@ class RequestController extends Controller
         $request->validate([
             'request_id' => ['required','exists:requests,id'],
             'location_id' => ['required','exists:locations,id'],
-            'distribution_date' => ['required','date'],
         ]);
 
         $req = ModelsRequest::findOrFail($request->request_id);
@@ -141,7 +141,7 @@ class RequestController extends Controller
         ]);
 
         $aidDistribution = AidDistribution::create($request->only(
-            ['request_id', 'location_id', 'distribution_date']
+            ['request_id', 'location_id']
         ));
 
         //Send Approve Notification
@@ -176,7 +176,6 @@ class RequestController extends Controller
             'request_ids' => ['required','string'],
             'aid_id' => ['required','exists:aids,id'],
             'location_id' => ['required','exists:locations,id'],
-            'distribution_date' => ['required','date'],
         ]);
 
         $requestIds = explode(',', $request->request_ids);
@@ -203,7 +202,6 @@ class RequestController extends Controller
             $aidDistribution = AidDistribution::create([
                 'request_id' => $req->id,
                 'location_id' => $request->location_id,
-                'distribution_date' => $request->distribution_date,
             ]);
 
             //Send Approve Notification
@@ -252,5 +250,29 @@ class RequestController extends Controller
         $civilian->notify(new RejectAidRequestNotification($req));
 
         return redirect()->back()->with('success', 'Request Was Rejected Successfully');
+    }
+
+    public function downloadTemplate()
+    {
+        $filePath = public_path('templates/ImportReceivedRequestsTemplate.xlsx');
+
+        if (file_exists($filePath)) {
+            return response()->download($filePath);
+        }
+        return redirect()->back()->with('error', 'File Not Found');
+    }
+
+    public function importFile(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|mimes:xlsx,xls,csv',
+            'aid_id' => 'required|exists:aids,id',
+        ]);
+
+        $file = $request->file('file');
+        $aidId = $request->input('aid_id');
+
+        Excel::import(new ChangeAidDistributionStatus($aidId), $file);
+        return redirect()->back()->with('success', 'Status For All Civilians Changed To Received');
     }
 }

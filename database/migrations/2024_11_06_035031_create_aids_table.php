@@ -20,6 +20,8 @@ class CreateAidsTable extends Migration
             $table->text('description');
             $table->unsignedTinyInteger('type')->default(Aid::DEFAULT_TYPE);
             $table->unsignedInteger('quantity');
+            $table->date('from');
+            $table->date('due');
             $table->foreignId('ngo_id')->constrained('ngos')->cascadeOnDelete()->cascadeOnUpdate();
             $table->timestamps();
         });

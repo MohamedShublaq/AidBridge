@@ -5,6 +5,7 @@ use App\Http\Controllers\Ngo\AidController;
 use App\Http\Controllers\Ngo\AidDistributionController;
 use App\Http\Controllers\Ngo\CivilianController;
 use App\Http\Controllers\Ngo\HomeController;
+use App\Http\Controllers\Ngo\LocationController;
 use App\Http\Controllers\Ngo\ProfileController;
 use App\Http\Controllers\Ngo\ProviderController;
 use App\Http\Controllers\Ngo\RequestController;
@@ -54,6 +55,9 @@ Route::group(['middleware'=>'auth:ngo', 'prefix'=>'ngo', 'as'=>'ngo.'] , functio
         Route::post('/restore' , 'restore')->name('restore');
     });
 
+    //*********************// Location Controller //*********************//
+    Route::resource('locations' , LocationController::class)->except(['create','edit','show']);
+
     //*********************// Aid Controller //*********************//
     Route::resource('aids' , AidController::class)->except('show');
 
@@ -67,6 +71,8 @@ Route::group(['middleware'=>'auth:ngo', 'prefix'=>'ngo', 'as'=>'ngo.'] , functio
         Route::post('/requests/aid/multiApprove' , 'multiApprove')->name('multiApprove');
         Route::post('/request/aid/reject' , 'reject')->name('reject');
         Route::post('/requests/{aid_id}/export/file/{status}' , 'exportFile')->name('exportFile');
+        Route::get('/download/template' , 'downloadTemplate')->name('downloadTemplate');
+        Route::post('/import/file' , 'importFile')->name('importFile');
     });
 
     //*********************// AidDistribution Controller //*********************//

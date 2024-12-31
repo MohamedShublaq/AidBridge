@@ -4,7 +4,7 @@ namespace App\Http\Requests\Ngo;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class AidRequest extends FormRequest
+class LocationRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,14 +24,7 @@ class AidRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => ['required','string','min:3','max:50'],
-            'description' => ['required','string','min:10'],
-            'type' => ['required','in:1,2,3'],
-            'quantity' => ['required','integer'],
-            'from' => ['required', 'date'],
-            'due' => ['required', 'date', 'after:from'],
-            'locations' => ['required','array','min:1'],
-            'locations.*' => ['required','exists:locations,id'],
+            'name' => ['required','string','max:100'],
             'ngo_id' => ['required','exists:ngos,id'],
         ];
     }

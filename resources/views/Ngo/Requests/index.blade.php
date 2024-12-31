@@ -17,12 +17,10 @@
 
 @section('content')
     <div id="content-wrapper" class="d-flex flex-column">
-
         <!-- Main Content -->
         <div id="content">
             <!-- Begin Page Content -->
             <div class="container-fluid">
-
                 <!-- Page Heading -->
                 <div class="d-flex justify-content-between align-items-center mb-4">
                     <h1 class="h3 text-gray-800">
@@ -36,7 +34,17 @@
                             Unavailable Requests Management
                         @endif
                     </h1>
-                    <button id="exportBtn" class="btn btn-success">Export to Excel</button>
+                    <div class="d-flex">
+                        @if($status == App\Models\Request::APPROVED)
+                            <button type="button" class="btn btn-primary mr-2" title="Import" data-toggle="modal"
+                                data-target="#importFile"><i class="fas fa-file-import"></i>
+                                Import File
+                            </button>
+                        @endif
+                        <button id="exportBtn" class="btn btn-success"><i class="fas fa-download"></i>
+                            Export to Excel
+                        </button>
+                    </div>
                 </div>
 
                 <!-- Search Form -->
@@ -216,6 +224,9 @@
 
                 @if ($status == App\Models\Request::PENDING)
                     @include('Ngo.Requests.multiApprove')
+                @endif
+                @if ($status == App\Models\Request::APPROVED)
+                    @include('Ngo.Requests.import')
                 @endif
             </div>
             <!-- /.container-fluid -->

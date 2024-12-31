@@ -5,24 +5,18 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class AidDistribution extends Model
+class AidLocation extends Model
 {
     use HasFactory;
 
-    //For Status Column
-    public const NOT_RECEIVED = 0;
-    public const RECEIVED = 1;
-    public const DEFAULT_STATUS = self::NOT_RECEIVED;
-
     protected $fillable = [
-        'request_id',
+        'aid_id',
         'location_id',
-        'status',
     ];
 
-    public function request()
+    public function aid()
     {
-        return $this->belongsTo(Request::class);
+        return $this->belongsTo(Aid::class);
     }
 
     public function location()

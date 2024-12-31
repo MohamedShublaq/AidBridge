@@ -44,6 +44,10 @@ class Ngo extends Authenticatable
                     ->withTimestamps();
     }
 
+    public function locations(){
+        return $this->hasMany(Location::class);
+    }
+
     public function aids(){
         return $this->hasMany(Aid::class);
     }
@@ -66,6 +70,9 @@ class Ngo extends Authenticatable
     protected static function boot() {
         parent::boot();
 
+        static::deleting(function($ngo) {
+            $ngo->locations()->delete();
+        });
         static::deleting(function($ngo) {
             $ngo->aids()->delete();
         });
