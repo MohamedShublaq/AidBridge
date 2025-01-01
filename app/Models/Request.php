@@ -34,4 +34,13 @@ class Request extends Model
     {
         return $this->hasMany(AidDistribution::class);
     }
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::deleting(function ($request) {
+            $request->aidDistributions()->delete();
+        });
+    }
 }

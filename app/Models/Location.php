@@ -36,8 +36,11 @@ class Location extends Model
     {
         parent::boot();
 
-        static::deleting(function ($aid) {
-            $aid->aidLocations()->delete();
+        static::deleting(function ($location) {
+            $location->aidLocations()->delete();
+        });
+        static::deleting(function ($location) {
+            $location->aidDistributions()->delete();
         });
     }
 }
