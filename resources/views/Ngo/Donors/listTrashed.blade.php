@@ -22,12 +22,16 @@
                             <td>{{ $donor->donor->phone }}</td>
                             <td>{{ $donor->donor->country->name }}</td>
                             <td class="text-center">
-                                <button type="button" class="btn btn-success btn-sm" title="Restore" data-toggle="modal" data-target="#restoreDonor_{{ $donor->id }}">
-                                    Restore
-                                </button>
-                                <a href="{{ route('ngo.donors.show', $donor->donor->id) }}" class="btn btn-info btn-sm" title="Show">
-                                    Show
-                                </a>
+                                <div class="btn-group" role="group" aria-label="Actions">
+                                    <button type="button" class="btn btn-success btn-sm" title="Restore"
+                                        data-toggle="modal" data-target="#restoreDonor_{{ $donor->id }}">
+                                        Restore
+                                    </button>
+                                    <a href="{{ route('ngo.donors.show', $donor->donor->id) }}"
+                                        class="btn btn-info btn-sm" title="Show">
+                                        Show
+                                    </a>
+                                </div>
                             </td>
                         </tr>
                         @include('Ngo.Donors.restore')

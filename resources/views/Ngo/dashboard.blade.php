@@ -159,7 +159,7 @@
                             <div class="h4 font-weight-bold text-gray-800">{{ $donorDeleted }}</div>
                         </div>
                         <div class="col-auto">
-                            <i class="fas fa-users fa-3x text-gray-300"></i>
+                            <i class="fas fa-hands-helping fa-3x text-gray-300"></i>
                         </div>
                     </div>
                 </div>
@@ -167,8 +167,9 @@
         </div>
     </div>
 
-    <!-- Aids -->
+
     <div class="row">
+        <!-- Aids -->
         <div class="col-lg-3 col-md-6 mb-4">
             <div class="card border-left-primary shadow h-100 py-2">
                 <div class="card-body">
@@ -186,52 +187,68 @@
                 </div>
             </div>
         </div>
+        <!-- Received Aids -->
+        <div class="col-lg-3 col-md-6 mb-4">
+            <div class="card border-left-success shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                Received Aids
+                            </div>
+                            <div class="h4 font-weight-bold text-gray-800">{{ $receivedAids }}</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-box-open fa-3x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Locations -->
+        <div class="col-lg-3 col-md-6 mb-4">
+            <div class="card border-left-info shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                Locations
+                            </div>
+                            <div class="h4 font-weight-bold text-gray-800">{{ $locations }}</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-map-marker-alt fa-3x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Providers -->
+        <div class="col-lg-3 col-md-6 mb-4">
+            <div class="card border-left-warning shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                Providers
+                            </div>
+                            <div class="h4 font-weight-bold text-gray-800">{{ $providers }}</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-users fa-3x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- Charts Section -->
-    {{-- <div class="row">
-        <!-- Civilians Chart -->
-        <div class="col-lg-6 mb-4">
-            <div class="card shadow">
-                <div class="card-header bg-primary text-white text-center font-weight-bold">
-                    {{ $civiliansChart->options['chart_title'] }}
-                </div>
-                <div class="card-body">
-                    {!! $civiliansChart->renderHtml() !!}
-                </div>
-            </div>
-        </div>
-
-        <!-- Donors Chart -->
-        <div class="col-lg-6 mb-4">
-            <div class="card shadow">
-                <div class="card-header bg-success text-white text-center font-weight-bold">
-                    {{ $donorsChart->options['chart_title'] }}
-                </div>
-                <div class="card-body">
-                    {!! $donorsChart->renderHtml() !!}
-                </div>
-            </div>
-        </div>
-    </div>
-
     <div class="row">
-        <!-- NGOs Chart -->
-        <div class="col-lg-6 mb-4">
-            <div class="card shadow">
-                <div class="card-header bg-info text-white text-center font-weight-bold">
-                    {{ $ngosChart->options['chart_title'] }}
-                </div>
-                <div class="card-body">
-                    {!! $ngosChart->renderHtml() !!}
-                </div>
-            </div>
-        </div>
-
         <!-- Aids Chart -->
         <div class="col-lg-6 mb-4">
             <div class="card shadow">
-                <div class="card-header bg-warning text-white text-center font-weight-bold">
+                <div class="card-header bg-primary text-white text-center font-weight-bold">
                     {{ $aidsChart->options['chart_title'] }}
                 </div>
                 <div class="card-body">
@@ -239,7 +256,18 @@
                 </div>
             </div>
         </div>
-    </div> --}}
+        <!-- Civilians Chart -->
+        <div class="col-lg-6 mb-4">
+            <div class="card shadow">
+                <div class="card-header bg-success text-white text-center font-weight-bold">
+                    {{ $civiliansChart->options['chart_title'] }}
+                </div>
+                <div class="card-body">
+                    {!! $civiliansChart->renderHtml() !!}
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 @endsection
@@ -264,10 +292,8 @@
 </style>
 @endpush
 
-{{-- @push('js')
-{!! $civiliansChart->renderChartJsLibrary() !!}
-{!! $civiliansChart->renderJs() !!}
-{!! $donorsChart->renderJs() !!}
-{!! $ngosChart->renderJs() !!}
+@push('js')
+{!! $aidsChart->renderChartJsLibrary() !!}
 {!! $aidsChart->renderJs() !!}
-@endpush --}}
+{!! $civiliansChart->renderJs() !!}
+@endpush

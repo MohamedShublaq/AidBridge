@@ -155,20 +155,22 @@
                                 <td>{{ $req->user->city }}</td>
                                 <td>{{ $req->user->street }}</td>
                                 <td class="text-center">
-                                    @if ($status == App\Models\Request::PENDING)
-                                        <button type="button" class="btn btn-success btn-sm" title="Approve"
-                                            data-toggle="modal" data-target="#approve_{{ $req->id }}">
-                                            Approve
-                                        </button>
-                                        <button type="button" class="btn btn-danger btn-sm" title="Reject"
-                                            data-toggle="modal" data-target="#reject_{{ $req->id }}">
-                                            Reject
-                                        </button>
-                                    @endif
-                                    <a href="{{ route('ngo.civilians.show', $req->user->id) }}"
-                                        class="btn btn-info btn-sm" title="Show">
-                                        Show
-                                    </a>
+                                    <div class="btn-group" role="group" aria-label="Actions">
+                                        @if ($status == App\Models\Request::PENDING)
+                                            <button type="button" class="btn btn-success btn-sm" title="Approve"
+                                                data-toggle="modal" data-target="#approve_{{ $req->id }}">
+                                                Approve
+                                            </button>
+                                            <button type="button" class="btn btn-danger btn-sm" title="Reject"
+                                                data-toggle="modal" data-target="#reject_{{ $req->id }}">
+                                                Reject
+                                            </button>
+                                        @endif
+                                        <a href="{{ route('ngo.civilians.show', $req->user->id) }}"
+                                            class="btn btn-info btn-sm" title="Show">
+                                            Show
+                                        </a>
+                                    </div>
                                 </td>
                             </tr>
                             @if ($status == App\Models\Request::PENDING)

@@ -48,25 +48,32 @@
                             <td>{{ $civ->user->childrens }}</td>
                             <td>{{ $civ->user->country->name ?? 'Not Selected' }}</td>
                             <td class="text-center">
-                                @if ($civ->status == App\Models\NgosUsers::PENDING)
-                                    <button type="button" class="btn btn-success btn-sm" title="Approve"
-                                        data-toggle="modal" data-target="#approve_{{ $civ->id }}">
-                                        Approve
+                                <div class="btn-group" role="group" aria-label="Actions">
+                                    @if ($civ->status == App\Models\NgosUsers::PENDING)
+                                        <button type="button" class="btn btn-success btn-sm" title="Approve"
+                                            data-toggle="modal" data-target="#approve_{{ $civ->id }}">
+                                            Approve
+                                        </button>
+                                        <button type="button" class="btn btn-warning btn-sm" title="Reject"
+                                            data-toggle="modal" data-target="#reject_{{ $civ->id }}">
+                                            Reject
+                                        </button>
+                                    @endif
+                                    <button type="button" class="btn btn-danger btn-sm" title="Delete"
+                                        data-toggle="modal" data-target="#deleteCiv_{{ $civ->id }}">
+                                        Delete
                                     </button>
-                                    <button type="button" class="btn btn-warning btn-sm" title="Reject"
-                                        data-toggle="modal" data-target="#reject_{{ $civ->id }}">
-                                        Reject
-                                    </button>
-                                @endif
-                                <button type="button" class="btn btn-danger btn-sm" title="Delete" data-toggle="modal"
-                                    data-target="#deleteCiv_{{ $civ->id }}">
-                                    Delete
-                                </button>
-                                <a href="{{ route('ngo.civilians.show', $civ->user->id) }}" class="btn btn-info btn-sm"
-                                    title="Show">
-                                    Show
-                                </a>
-
+                                    <a href="{{ route('ngo.civilians.show', $civ->user->id) }}"
+                                        class="btn btn-info btn-sm" title="Show">
+                                        Show
+                                    </a>
+                                    @if ($civ->status == App\Models\NgosUsers::APPROVED)
+                                        <a href="{{ route('ngo.civilians.receivedAids', $civ->user->id) }}"
+                                            class="btn btn-success btn-sm" title="Show">
+                                            Received Aids
+                                        </a>
+                                    @endif
+                                </div>
                             </td>
                         </tr>
                         @include('Ngo.Civilians.approve')

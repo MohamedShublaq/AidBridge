@@ -9,7 +9,6 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
-//use Maatwebsite\Excel\Concerns\WithValidation;
 
 class CiviliansImport implements ToModel, WithHeadingRow
 {
@@ -55,22 +54,6 @@ class CiviliansImport implements ToModel, WithHeadingRow
         return $user;
     }
 
-    // public function rules(): array
-    // {
-    //     return [
-    //         'name'           =>
-    //         'id_number'      =>
-    //         'password'       =>
-    //         'country'        =>
-    //         'city'           =>
-    //         'street'         =>
-    //         'phone'          =>
-    //         'gender'         =>
-    //         'age'            =>
-    //         'marital_status' =>
-    //         'childrens'      =>
-    //     ];
-    // }
 
     private function getMaritalStatus($status)
     {

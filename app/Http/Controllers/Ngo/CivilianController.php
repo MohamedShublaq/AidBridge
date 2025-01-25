@@ -11,7 +11,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Imports\CiviliansImport;
+use App\Models\AidDistribution;
 use App\Models\Provider;
+use App\Models\Request as ModelsRequest;
 
 class CivilianController extends Controller
 {
@@ -56,6 +58,47 @@ class CivilianController extends Controller
         $countries = Country::select('id', 'name')->get();
         return view('Ngo.Civilians.show', compact('civ', 'countries'));
     }
+
+    public function receivedAids(Request $request, $id)
+    {
+        $civ = User::findOrFail($id);
+
+        $query = ModelsRequest::where('user_id', $civ->id)
+            ->whereHas('aid', function ($query) {
+                $query->where('ngo_id', auth('ngo')->user()->id);
+            })
+            ->whereHas('aidDistributions', function ($query) {
+                $query->where('status', AidDistribution::RECEIVED);
+            })
+            ->with(['aid', 'aidDistributions.location']);
+
+        if ($request->filled('name')) {
+            $query->whereHas('aid', function ($q) use ($request) {
+                $q->where('name', 'like', '%' . $request->name . '%');
+            });
+        }
+
+        if ($request->filled('description')) {
+            $query->whereHas('aid', function ($q) use ($request) {
+                $q->where('description', 'like', '%' . $request->description . '%');
+            });
+        }
+
+        if ($request->filled('type')) {
+            $query->whereHas('aid', function ($q) use ($request) {
+                $q->where('type', $request->type);
+            });
+        }
+
+        $receivedAids = $query->latest()->paginate(10);
+
+        if ($request->ajax()) {
+            return response()->json(view('Ngo.Civilians.listReceivedAids', compact('receivedAids'))->render());
+        }
+
+        return view('Ngo.Civilians.receivedAids', compact('receivedAids', 'id'));
+    }
+
 
     public function delete(Request $request)
     {

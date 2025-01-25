@@ -19,12 +19,16 @@
                             <td>{{ $admin->email }}</td>
                             <td>{{ $admin->authorization->role }}</td>
                             <td class="text-center">
-                                <a href="{{ route('admin.admins.edit', $admin->id) }}" class="btn btn-warning btn-sm" title="Edit">
-                                    Edit
-                                </a>
-                                <button type="button" class="btn btn-danger btn-sm" title="Delete" data-toggle="modal" data-target="#deleteAdmin_{{ $admin->id }}">
-                                    Delete
-                                </button>
+                                <div class="btn-group" role="group" aria-label="Actions">
+                                    <a href="{{ route('admin.admins.edit', $admin->id) }}"
+                                        class="btn btn-warning btn-sm" title="Edit">
+                                        Edit
+                                    </a>
+                                    <button type="button" class="btn btn-danger btn-sm" title="Delete"
+                                        data-toggle="modal" data-target="#deleteAdmin_{{ $admin->id }}">
+                                        Delete
+                                    </button>
+                                </div>
                             </td>
                         </tr>
                         @include('Admin.Admins.delete')

@@ -17,16 +17,20 @@
                         <tr class="location-row">
                             <th scope="row" class="text-center">{{ $loop->iteration }}</th>
                             <td class="text-center">{{ $location->name }}</td>
-                            <td class="text-center">{{ $location->aidDistributions()->where('status' , App\Models\AidDistribution::RECEIVED)->count() }}</td>
                             <td class="text-center">
-                                <button type="button" class="btn btn-warning btn-sm" title="Edit" data-toggle="modal"
-                                    data-target="#editLocation_{{ $location->id }}">
-                                    Edit
-                                </button>
-                                <button type="button" class="btn btn-danger btn-sm" title="Delete" data-toggle="modal"
-                                    data-target="#deleteLocation_{{ $location->id }}">
-                                    Delete
-                                </button>
+                                {{ $location->aidDistributions()->where('status', App\Models\AidDistribution::RECEIVED)->count() }}
+                            </td>
+                            <td class="text-center">
+                                <div class="btn-group" role="group" aria-label="Actions">
+                                    <button type="button" class="btn btn-warning btn-sm" title="Edit"
+                                        data-toggle="modal" data-target="#editLocation_{{ $location->id }}">
+                                        Edit
+                                    </button>
+                                    <button type="button" class="btn btn-danger btn-sm" title="Delete"
+                                        data-toggle="modal" data-target="#deleteLocation_{{ $location->id }}">
+                                        Delete
+                                    </button>
+                                </div>
                             </td>
                             <td class="text-center">
                                 @if ($location->aids->count() > 0)
@@ -69,7 +73,9 @@
                                                             @endif
                                                         </td>
                                                         <td class="text-center">{{ $aid->quantity }}</td>
-                                                        <td class="text-center">{{ $aid->requests->sum(fn($request) => $request->aidDistributions()->where('status', App\Models\AidDistribution::RECEIVED)->where('location_id', $location->id)->count()) }}</td>
+                                                        <td class="text-center">
+                                                            {{ $aid->requests->sum(fn($request) => $request->aidDistributions()->where('status', App\Models\AidDistribution::RECEIVED)->where('location_id', $location->id)->count()) }}
+                                                        </td>
                                                     </tr>
                                                 @endforeach
                                             </tbody>
@@ -98,34 +104,34 @@
 </div>
 
 @push('js')
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const toggles = document.querySelectorAll('.toggle-icon');
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const toggles = document.querySelectorAll('.toggle-icon');
 
-        toggles.forEach(toggle => {
-            toggle.addEventListener('click', function() {
-                const rowId = this.getAttribute('data-row-id');
-                const detailsRow = document.getElementById(`details-row-${rowId}`);
-                if (detailsRow) {
-                    detailsRow.classList.toggle('d-none');
+            toggles.forEach(toggle => {
+                toggle.addEventListener('click', function() {
+                    const rowId = this.getAttribute('data-row-id');
+                    const detailsRow = document.getElementById(`details-row-${rowId}`);
+                    if (detailsRow) {
+                        detailsRow.classList.toggle('d-none');
 
-                    // Toggle the icon between plus and minus
-                    const isCollapsed = this.classList.contains('fa-plus-circle');
-                    this.classList.toggle('fa-plus-circle', !isCollapsed);
-                    this.classList.toggle('fa-minus-circle', isCollapsed);
+                        // Toggle the icon between plus and minus
+                        const isCollapsed = this.classList.contains('fa-plus-circle');
+                        this.classList.toggle('fa-plus-circle', !isCollapsed);
+                        this.classList.toggle('fa-minus-circle', isCollapsed);
 
-                    // Change icon color
-                    this.classList.toggle('text-primary', !isCollapsed);
-                    this.classList.toggle('text-danger', isCollapsed);
+                        // Change icon color
+                        this.classList.toggle('text-primary', !isCollapsed);
+                        this.classList.toggle('text-danger', isCollapsed);
 
-                    // Update the tooltip title
-                    this.setAttribute(
-                        'title',
-                        !isCollapsed ? 'Show Details' : 'Hide Details'
-                    );
-                }
+                        // Update the tooltip title
+                        this.setAttribute(
+                            'title',
+                            !isCollapsed ? 'Show Details' : 'Hide Details'
+                        );
+                    }
+                });
             });
         });
-    });
-</script>
+    </script>
 @endpush

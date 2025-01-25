@@ -22,35 +22,37 @@
                             <td>{{ $contact->phone }}</td>
                             <td>{{ \Illuminate\Support\Str::limit($contact->body, 20, '...') }}</td>
                             <td>
-                                <span class="badge {{ $contact->status == App\Models\Contact::READ ? 'bg-success' : 'bg-danger' }} text-white">
+                                <span
+                                    class="badge {{ $contact->status == App\Models\Contact::READ ? 'bg-success' : 'bg-danger' }} text-white">
                                     {{ $contact->status == App\Models\Contact::READ ? 'Read' : 'Unread' }}
                                 </span>
                             </td>
                             <td class="text-center">
-                                <a href="{{ route('admin.contacts.show', $contact->id) }}" class="btn btn-success btn-sm"
-                                    title="Show">
-                                    Show
-                                </a>
-                                @php
-                                    $pendingDeletionContact = App\Models\DeletionRequest::where(
-                                        'deletable_type',
-                                        App\Models\Contact::class,
-                                    )
-                                        ->where('deletable_id', $contact->id)
-                                        ->where('status', App\Models\DeletionRequest::PENDING)
-                                        ->first();
-                                @endphp
-                                @if (!$pendingDeletionContact)
-                                    <button type="button" class="btn btn-danger btn-sm" title="Delete"
-                                        data-toggle="modal"
-                                        data-target="#deleteContact_{{ $contact->id }}">
-                                        Delete
-                                    </button>
-                                @else
-                                    <button type="button" class="btn btn-warning btn-sm">
-                                        Deletion is pending
-                                    </button>
-                                @endif
+                                <div class="btn-group" role="group" aria-label="Actions">
+                                    <a href="{{ route('admin.contacts.show', $contact->id) }}"
+                                        class="btn btn-success btn-sm" title="Show">
+                                        Show
+                                    </a>
+                                    @php
+                                        $pendingDeletionContact = App\Models\DeletionRequest::where(
+                                            'deletable_type',
+                                            App\Models\Contact::class,
+                                        )
+                                            ->where('deletable_id', $contact->id)
+                                            ->where('status', App\Models\DeletionRequest::PENDING)
+                                            ->first();
+                                    @endphp
+                                    @if (!$pendingDeletionContact)
+                                        <button type="button" class="btn btn-danger btn-sm" title="Delete"
+                                            data-toggle="modal" data-target="#deleteContact_{{ $contact->id }}">
+                                            Delete
+                                        </button>
+                                    @else
+                                        <button type="button" class="btn btn-warning btn-sm">
+                                            Deletion is pending
+                                        </button>
+                                    @endif
+                                </div>
                             </td>
                         </tr>
                         @include('Admin.Contacts.delete')

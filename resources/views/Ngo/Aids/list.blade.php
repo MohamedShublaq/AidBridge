@@ -10,6 +10,7 @@
                         <th scope="col">Type</th>
                         <th scope="col">Locations</th>
                         <th scope="col">Quantity</th>
+                        <th scope="col">Num of Received</th>
                         <th scope="col">Since</th>
                         <th scope="col" class="text-center">Actions</th>
                     </tr>
@@ -35,6 +36,9 @@
                                 @endforeach
                             </td>
                             <td>{{ $aid->quantity }}</td>
+                            <td>
+                                {{ $aid->requests->sum(fn($request) => $request->aidDistributions()->where('status', App\Models\AidDistribution::RECEIVED)->count()) }}
+                            </td>
                             <td>{{ $aid->created_at->diffForHumans() }}</td>
 
 
@@ -69,7 +73,7 @@
                         @include('Ngo.Aids.delete')
                     @empty
                         <tr>
-                            <td colspan="8" class="text-center alert alert-info">
+                            <td colspan="9" class="text-center alert alert-info">
                                 No Aids found
                             </td>
                         </tr>

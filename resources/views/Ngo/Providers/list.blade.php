@@ -20,14 +20,16 @@
                             <td>{{ $provider->phone }}</td>
                             <td>{{ $provider->users_count }}</td>
                             <td class="text-center">
-                                <button type="button" class="btn btn-warning btn-sm" title="Edit"
-                                    data-toggle="modal" data-target="#editProvider_{{ $provider->id }}">
-                                    Edit
-                                </button>
-                                <button type="button" class="btn btn-danger btn-sm" title="Delete"
-                                    data-toggle="modal" data-target="#deleteProvider_{{ $provider->id }}">
-                                    Delete
-                                </button>
+                                <div class="btn-group" role="group" aria-label="Actions">
+                                    <button type="button" class="btn btn-warning btn-sm" title="Edit"
+                                        data-toggle="modal" data-target="#editProvider_{{ $provider->id }}">
+                                        Edit
+                                    </button>
+                                    <button type="button" class="btn btn-danger btn-sm" title="Delete"
+                                        data-toggle="modal" data-target="#deleteProvider_{{ $provider->id }}">
+                                        Delete
+                                    </button>
+                                </div>
                             </td>
                         </tr>
                         @include('Ngo.Providers.edit')

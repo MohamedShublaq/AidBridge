@@ -39,6 +39,7 @@ Route::group(['middleware'=>'auth:ngo', 'prefix'=>'ngo', 'as'=>'ngo.'] , functio
         Route::post('/approve' , 'approve')->name('approve');
         Route::post('/reject' , 'reject')->name('reject');
         Route::get('/{id}/show' , 'show')->name('show');
+        Route::get('/{id}/received/aids' , 'receivedAids')->name('receivedAids');
         Route::post('/delete' , 'delete')->name('delete');
         Route::get('/show/trashed' , 'showTrashed')->name('showTrashed');
         Route::post('/restore' , 'restore')->name('restore');

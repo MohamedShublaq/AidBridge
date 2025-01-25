@@ -21,29 +21,31 @@
                             <td>{{ $donor->donor->phone }}</td>
                             <td>{{ $donor->donor->country->name }}</td>
                             <td class="text-center">
-                                <a href="{{ route('admin.donors.show', $donor->donor_id) }}"
-                                    class="btn btn-success btn-sm" title="Show">
-                                    Show
-                                </a>
-                                @php
-                                    $pendingDeletionDonor = App\Models\DeletionRequest::where(
-                                        'deletable_type',
-                                        App\Models\Donor::class,
-                                    )
-                                        ->where('deletable_id', $donor->doner->id)
-                                        ->where('status', App\Models\DeletionRequest::PENDING)
-                                        ->first();
-                                @endphp
-                                @if (!$pendingDeletionDonor)
-                                    <button type="button" class="btn btn-danger btn-sm" title="Delete"
-                                        data-toggle="modal" data-target="#deleteDonor_{{ $donor->id }}">
-                                        Delete
-                                    </button>
-                                @else
-                                    <button type="button" class="btn btn-warning btn-sm">
-                                        Deletion is pending
-                                    </button>
-                                @endif
+                                <div class="btn-group" role="group" aria-label="Actions">
+                                    <a href="{{ route('admin.donors.show', $donor->donor_id) }}"
+                                        class="btn btn-success btn-sm" title="Show">
+                                        Show
+                                    </a>
+                                    @php
+                                        $pendingDeletionDonor = App\Models\DeletionRequest::where(
+                                            'deletable_type',
+                                            App\Models\Donor::class,
+                                        )
+                                            ->where('deletable_id', $donor->doner->id)
+                                            ->where('status', App\Models\DeletionRequest::PENDING)
+                                            ->first();
+                                    @endphp
+                                    @if (!$pendingDeletionDonor)
+                                        <button type="button" class="btn btn-danger btn-sm" title="Delete"
+                                            data-toggle="modal" data-target="#deleteDonor_{{ $donor->id }}">
+                                            Delete
+                                        </button>
+                                    @else
+                                        <button type="button" class="btn btn-warning btn-sm">
+                                            Deletion is pending
+                                        </button>
+                                    @endif
+                                </div>
                             </td>
                         </tr>
                         @include('Admin.Ngos.deleteDonor')

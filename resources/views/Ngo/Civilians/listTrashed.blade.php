@@ -48,15 +48,16 @@
                             <td>{{ $civ->user->childrens }}</td>
                             <td>{{ $civ->user->country->name ?? 'Not Selected' }}</td>
                             <td class="text-center">
-                                <button type="button" class="btn btn-success btn-sm" title="Restore" data-toggle="modal"
-                                    data-target="#restoreCiv_{{ $civ->id }}">
-                                    Restore
-                                </button>
-                                <a href="{{ route('ngo.civilians.show', $civ->user->id) }}" class="btn btn-info btn-sm"
-                                    title="Show">
-                                    Show
-                                </a>
-
+                                <div class="btn-group" role="group" aria-label="Actions">
+                                    <button type="button" class="btn btn-success btn-sm" title="Restore"
+                                        data-toggle="modal" data-target="#restoreCiv_{{ $civ->id }}">
+                                        Restore
+                                    </button>
+                                    <a href="{{ route('ngo.civilians.show', $civ->user->id) }}"
+                                        class="btn btn-info btn-sm" title="Show">
+                                        Show
+                                    </a>
+                                </div>
                             </td>
                         </tr>
                         @include('Ngo.Civilians.restore')
