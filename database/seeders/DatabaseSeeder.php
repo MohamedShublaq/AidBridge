@@ -17,13 +17,15 @@ class DatabaseSeeder extends Seeder
         (new AuthorizationSeeder)->run();
         (new AdminSeeder)->run();
         (new SettingSeeder)->run();
-        // (new NgoSeeder)->run();
-        // (new ProviderSeeder)->run();
-        // (new AidSeeder)->run();
-        // (new DonorSeeder)->run();
-        // (new NgosDonorsSeeder)->run();
-        // (new UserSeeder)->run();
-        // (new NgosUsersSeeder)->run();
-        // (new ContactSeeder)->run();
+        (new NgoSeeder)->run();
+        (new ProviderSeeder)->run();
+        (new LocationSeeder)->run();
+        (new AidSeeder)->run();
+        (new AidLocationSeeder)->run();
+        (new DonorSeeder)->run();
+        (new NgosDonorsSeeder)->run();
+        (new UserSeeder)->run();
+        (new NgosUsersSeeder)->run();
+        (new ContactSeeder)->run();
     }
 }

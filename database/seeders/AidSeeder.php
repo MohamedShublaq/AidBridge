@@ -14,6 +14,6 @@ class AidSeeder extends Seeder
      */
     public function run()
     {
-        Aid::factory()->count(100)->create();
+        Aid::factory()->count(1000)->create();
     }
 }

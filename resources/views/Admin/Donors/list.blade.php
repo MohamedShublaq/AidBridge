@@ -22,10 +22,10 @@
                             <td>{{ $donor->country->name }}</td>
                             <td class="text-center">
                                 <div class="btn-group" role="group" aria-label="Actions">
-                                    <a href="{{ route('admin.donors.show', $donor->id) }}"
+                                    {{-- <a href="{{ route('admin.donors.show', $donor->id) }}"
                                         class="btn btn-success btn-sm" title="Show">
                                         Show
-                                    </a>
+                                    </a> --}}
                                     @php
                                         $pendingDeletionDonor = App\Models\DeletionRequest::where(
                                             'deletable_type',

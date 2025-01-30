@@ -2,12 +2,11 @@
 
 namespace Database\Factories;
 
-use App\Models\Country;
+use App\Models\Ngo;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
 
-class DonorFactory extends Factory
+class LocationFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -26,11 +25,8 @@ class DonorFactory extends Factory
         );
 
         return [
-            'name' => $this->faker->name(),
-            'email' => $this->faker->unique()->safeEmail(),
-            'password' => Hash::make('password'),
-            'country_id' => Country::inRandomOrder()->first()->id,
-            'phone' => $this->faker->phoneNumber,
+            'name' => ucfirst($this->faker->city()),
+            'ngo_id' => Ngo::inRandomOrder()->first()->id,
             'created_at' => $createdAt,
             'updated_at' => $createdAt,
         ];

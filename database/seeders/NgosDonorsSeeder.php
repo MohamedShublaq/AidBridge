@@ -14,6 +14,6 @@ class NgosDonorsSeeder extends Seeder
      */
     public function run()
     {
-        NgosDonors::factory()->count(100)->create();
+        NgosDonors::factory()->count(1000)->create();
     }
 }

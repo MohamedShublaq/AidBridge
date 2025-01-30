@@ -2,10 +2,10 @@
 
 namespace Database\Seeders;
 
-use App\Models\Donor;
+use App\Models\Location;
 use Illuminate\Database\Seeder;
 
-class DonorSeeder extends Seeder
+class LocationSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -14,6 +14,6 @@ class DonorSeeder extends Seeder
      */
     public function run()
     {
-        Donor::factory()->count(1000)->create();
+        Location::factory()->count(1000)->create();
     }
 }

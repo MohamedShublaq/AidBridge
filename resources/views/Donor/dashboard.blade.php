@@ -49,5 +49,6 @@
             </div>
         </div>
     @endforeach
+    {{$ngos->links()}}
 </div>
 @endsection

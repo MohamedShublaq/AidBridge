@@ -22,7 +22,7 @@ class HomeController extends Controller
         })
         ->select('id', 'name', 'logo')
         ->latest()
-        ->get();
+        ->paginate(12);
 
         return view('Donor.dashboard' , compact('ngos'));
     }

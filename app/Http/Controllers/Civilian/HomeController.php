@@ -21,7 +21,7 @@ class HomeController extends Controller
         })
         ->select('id', 'name', 'logo')
         ->latest()
-        ->get();
+        ->paginate(12);
 
         return view('Civilian.dashboard', compact('ngos'));
     }

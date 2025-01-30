@@ -15,6 +15,6 @@ class NgoSeeder extends Seeder
      */
     public function run()
     {
-        Ngo::factory()->count(3)->create();
+        Ngo::factory()->count(100)->create();
     }
 }
