@@ -201,7 +201,7 @@
                                     <label for="status" class="form-label">Status</label>
                                     <select id="status" name="status" class="form-control">
                                         <option value="">Select Status</option>
-                                        <option value="{{ App\Models\AidDistribution::NOT_RECEIVED }}">Pending</option>
+                                        <option value="{{ App\Models\AidDistribution::NOT_RECEIVED }}">Not Received</option>
                                         <option value="{{ App\Models\AidDistribution::RECEIVED }}">Received</option>
                                     </select>
                                 </div>

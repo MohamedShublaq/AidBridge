@@ -33,10 +33,10 @@
                                             Reject
                                         </button>
                                     @endif
-                                    <a href="{{ route('ngo.donors.show', $donor->donor->id) }}"
+                                    {{-- <a href="{{ route('ngo.donors.show', $donor->donor->id) }}"
                                         class="btn btn-info btn-sm" title="Show">
                                         Show
-                                    </a>
+                                    </a> --}}
                                     <button type="button" class="btn btn-danger btn-sm" title="Delete"
                                         data-toggle="modal" data-target="#deleteDonor_{{ $donor->id }}">
                                         Delete

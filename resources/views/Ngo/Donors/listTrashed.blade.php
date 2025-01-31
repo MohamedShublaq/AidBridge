@@ -27,10 +27,10 @@
                                         data-toggle="modal" data-target="#restoreDonor_{{ $donor->id }}">
                                         Restore
                                     </button>
-                                    <a href="{{ route('ngo.donors.show', $donor->donor->id) }}"
+                                    {{-- <a href="{{ route('ngo.donors.show', $donor->donor->id) }}"
                                         class="btn btn-info btn-sm" title="Show">
                                         Show
-                                    </a>
+                                    </a> --}}
                                 </div>
                             </td>
                         </tr>
